@@ -12,14 +12,14 @@ app.use(express.static(path.join(__dirname, 'build')));
 
 
 // Define a route
-app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-  });
-  
+
 app.get('/', (req, res) => {
     res.send('Server is running.'); // Send a simple response
   });
 
+  app.get('/*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  });
   
 app.get('/api/get-data', (req, res) => {
     const dataFile = getData("./data/guests.json");
