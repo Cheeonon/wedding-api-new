@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const app = express();
 const fs = require('fs');
 const { getData } = require('./utils/get');
@@ -7,7 +8,7 @@ const port = process.env.PORT || 8081; // Use port 3000 or a custom port if prov
 
 app.use(cors());
 app.use(express.json());
-
+app.use(express.static(path.join(__dirname, 'build')));
 
 // Define a route
 
@@ -19,6 +20,10 @@ app.get('/api/get-data', (req, res) => {
     const dataFile = getData("./data/guests.json");
     res.json(dataFile);
 });
+
+app.get('/*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  });
 
 app.post('/api/submit-rsvp', (req, res) => {
     const newData = req.body;
